@@ -17,8 +17,9 @@ namespace Roya.helper
                      .ForMember(d => d.Description, o => o.MapFrom(s => s.Description))
 
                      .ForMember(d => d.Comments, o => o.MapFrom(s => s.Comments.Select(c => new { c.text, c.DateTime })));
+
+            CreateMap<ProductDTO, Product>();
                   
-             
         }
     }
 }

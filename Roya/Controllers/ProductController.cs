@@ -26,17 +26,7 @@ namespace Roya.Controllers
             //if (!ModelState.IsValid) return BadRequest(ModelState);
             try
             {
-                var Addproduct = new Product()
-                {
-                    Name = product.Name,
-                    Description = product.Description,
-                    Type = product.Type,
-                    Price = product.Price,
-                    address = product.address,
-                    UserId = product.UserId
-
-
-                };
+                var Addproduct = mapper.Map<Product>(product);
                 await repositry.Add(Addproduct);
                 repositry.SaveChange();
                 return Created("done", product);
