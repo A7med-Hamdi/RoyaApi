@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roya", "Roya\Roya.csproj", "{DA3AE47B-C543-4D0A-9D7E-0C96882C4FF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roya_DDL", "Roya_DDL\Roya_DDL.csproj", "{12CDF733-B4DD-4DE4-B999-32590064DC2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roya_BLL", "Roya_BLL\Roya_BLL.csproj", "{0E8F7622-FDD0-4236-85D3-30450E0E6966}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA3AE47B-C543-4D0A-9D7E-0C96882C4FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA3AE47B-C543-4D0A-9D7E-0C96882C4FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA3AE47B-C543-4D0A-9D7E-0C96882C4FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA3AE47B-C543-4D0A-9D7E-0C96882C4FF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CDF733-B4DD-4DE4-B999-32590064DC2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CDF733-B4DD-4DE4-B999-32590064DC2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CDF733-B4DD-4DE4-B999-32590064DC2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CDF733-B4DD-4DE4-B999-32590064DC2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E8F7622-FDD0-4236-85D3-30450E0E6966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E8F7622-FDD0-4236-85D3-30450E0E6966}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E8F7622-FDD0-4236-85D3-30450E0E6966}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E8F7622-FDD0-4236-85D3-30450E0E6966}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5053025-A340-495E-8269-783C27A55AB8}
+	EndGlobalSection
+EndGlobal
