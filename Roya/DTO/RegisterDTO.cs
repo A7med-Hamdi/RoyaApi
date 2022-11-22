@@ -9,7 +9,7 @@
         public string City { get; set; }
         public string Country { get; set; }
 
-        public FormFile imgNmae { get; set; }
+        public IFormFile imgNmae { get; set; }
 
     }
 }

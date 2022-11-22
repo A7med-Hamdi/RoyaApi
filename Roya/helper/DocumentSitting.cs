@@ -2,7 +2,7 @@
 {
     public class DocumentSitting
     {
-        public static string addFile(FormFile file, string folderName)
+        public static string addFile(IFormFile file, string folderName)
         {
             var pathFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Files", folderName);
 

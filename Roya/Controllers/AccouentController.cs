@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Hotel.API.Errors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -25,10 +26,11 @@ namespace Roya.Controllers
         [HttpPost("admin")]
         public async Task<ActionResult> AdminRegister([FromForm]RegisterDTO registerDTO)
         {
-           if(!emailExist(registerDTO.Email).Result.Value) {
+           if(emailExist(registerDTO.Email).Result.Value) {
 
-                return BadRequest();            
+                return BadRequest(new ApiErroeResponse(400, "this Email is Already in use ! "));            
             }
+           
             var addUserAdmin = new User()
             {
                 UserName = registerDTO.Name,

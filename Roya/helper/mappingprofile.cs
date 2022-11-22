@@ -15,6 +15,7 @@ namespace Roya.helper
                      .ForMember(d => d.Price, o => o.MapFrom(s => s.Price))
                      .ForMember(d => d.Type, o => o.MapFrom(s => s.Type))
                      .ForMember(d => d.Description, o => o.MapFrom(s => s.Description))
+                     .ForMember(d => d.Images, o => o.MapFrom(s => s.Images.Select(m=>m.Name)))
 
                      .ForMember(d => d.Comments, o => o.MapFrom(s => s.Comments.Select(c => new { c.text, c.DateTime })));
 

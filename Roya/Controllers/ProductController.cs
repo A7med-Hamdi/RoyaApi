@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Hotel.API.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Roya.DTO;
+using Roya.helper;
 using Roya_BLL.interFaces;
 using Roya_DDL.Entities;
 using Roya_DDL.Entities.Identity;
@@ -21,15 +23,22 @@ namespace Roya.Controllers
             this.mapper = mapper;
         }
         [HttpPost]
-        public async Task<ActionResult<Product>> addProduct(ProductDTO product)
+        public async Task<ActionResult<Product>> addProduct([FromForm] ProductDTO product)
         {
-            //if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiErroeResponse(400,"invalid data"));
             try
             {
+                for (int i = 0; i < product.ImagesFile.Length; i++)
+
+
+                {
+                    product.Images.Add(new Image());
+                    product.Images[i].Name = DocumentSitting.addFile(product.ImagesFile[i], "images");
+                }
                 var Addproduct = mapper.Map<Product>(product);
                 await repositry.Add(Addproduct);
                 repositry.SaveChange();
-                return Created("done", product);
+                return Ok("Done");
 
             }
             catch (Exception ex)
@@ -58,16 +67,16 @@ namespace Roya.Controllers
 
         // update
 
-        [HttpPut]
-        public async Task<ActionResult> Update(ProductDTO product)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id,ProductDTO product)
         {
 
 
-            if (product.Id == null)
+                var updateproduct = await repositry.GetDataByIdAsync(id);
+            if (updateproduct == null)
                 return BadRequest();
             try
             {
-                var updateproduct = await repositry.GetDataByIdAsync(product.Id);
 
                 updateproduct.Name = product.Name;
                 updateproduct.Description = product.Description;
