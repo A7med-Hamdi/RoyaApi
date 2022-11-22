@@ -29,7 +29,6 @@ namespace Roya.Controllers
         }
         [HttpPost]
         [Authorize(Roles = RoleContentHelper.Admin)]
-        [Authorize(Roles = RoleContentHelper.UserBuyer)]
         public async Task<ActionResult<Product>> addProduct([FromForm] ProductDTO product)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiErroeResponse(400, "invalid data"));
