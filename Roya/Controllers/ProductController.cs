@@ -60,20 +60,7 @@ namespace Roya.Controllers
 
             var data = mapper.Map<IReadOnlyList<Product>, IReadOnlyList<productViewDTO>>(products);
 
-            //        var Products = context.Products
-            //.Include(p => p.Images)
-            //.Include(p=> p.user)
-            //.Include(p=>p.Comments)
-            //.Select(s => new
-            //{
-            //    user = s.user.UserName,
-            //    Name = s.Name,
-            //    Type = s.Type,
-            //    Description=s.Description,
-            //    address = s.address,
-            //    Price = s.Price,
-            //    Comments =s.Comments
-            //}).ToList();
+          
 
             return Ok(data);
 
@@ -155,6 +142,11 @@ namespace Roya.Controllers
             var data = await repositry.GetDataByIdAsync(id);
             if (data == null)
                 return NotFound();
+            var images = context.Images.ToList().Where(img => img.productid == id);
+            foreach (var img in images)
+            {
+                DocumentSitting.deleteFile("images", img.Name);
+            }
             repositry.Delete(data);
             repositry.SaveChange();
             return Ok(" Delete Done");

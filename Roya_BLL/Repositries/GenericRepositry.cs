@@ -28,6 +28,7 @@ namespace Roya_BLL.Repositries
             => await context.Set<T>().ToListAsync();
 
         public async Task<T> GetDataByIdAsync(int id)
+       
             => await context.Set<T>().FindAsync(id);
 
         public void SaveChange()
