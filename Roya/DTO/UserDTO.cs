@@ -1,5 +1,5 @@
 ﻿
-namespace Hotel_Api_2.DTO
+namespace Roya.DTO
 {
     public class UserDTO
     {

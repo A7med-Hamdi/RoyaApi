@@ -1,7 +1,8 @@
-﻿using Hotel_BLL.InterFaces;
+﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Roya_BLL.interFaces;
 using Roya_DDL.Entities.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hotel_BLL.Repositries
+namespace Roya_BLL.Repositries
 {
     public class TokenService : ITokenService
     {

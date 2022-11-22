@@ -1,12 +1,10 @@
-﻿using Hotel.API.DTO;
-using Hotel.API.Errors;
-using Hotel_Api_2.DTO;
-using Hotel_BLL.InterFaces;
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Roya.DTO;
+using Roya.Errors;
 using Roya.helper;
 using Roya_BLL.interFaces;
 using Roya_DDL.Entities.Identity;

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hotel_BLL.InterFaces
+namespace Roya_BLL.interFaces
 {
     public interface ITokenService
     {

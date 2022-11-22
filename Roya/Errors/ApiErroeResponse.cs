@@ -1,4 +1,4 @@
-﻿namespace Hotel.API.Errors
+﻿namespace Roya.Errors
 {
     public class ApiErroeResponse
     {

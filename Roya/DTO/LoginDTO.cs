@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Hotel.API.DTO
+namespace Roya.DTO
 {
     public class LoginDTO
     {

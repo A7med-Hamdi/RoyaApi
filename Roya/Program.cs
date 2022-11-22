@@ -1,5 +1,4 @@
-using Hotel_BLL.InterFaces;
-using Hotel_BLL.Repositries;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

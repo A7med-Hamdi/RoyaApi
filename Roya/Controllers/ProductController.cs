@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using Hotel.API.Errors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Roya.DTO;
+using Roya.Errors;
 using Roya.helper;
 using Roya_BLL.interFaces;
 using Roya_DDL.Entities;
@@ -27,6 +28,8 @@ namespace Roya.Controllers
             this.context = context;
         }
         [HttpPost]
+        [Authorize(Roles = RoleContentHelper.Admin)]
+        [Authorize(Roles = RoleContentHelper.UserBuyer)]
         public async Task<ActionResult<Product>> addProduct([FromForm] ProductDTO product)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiErroeResponse(400, "invalid data"));
