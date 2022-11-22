@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Roya_BLL\Roya_BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Files\Images\" />
+  </ItemGroup>
+
 </Project>

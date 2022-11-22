@@ -23,7 +23,7 @@ namespace Roya.Controllers
             this.roleManager = roleManager;
         }
         [HttpPost("admin")]
-        public async Task<ActionResult> AdminRegister(RegisterDTO registerDTO)
+        public async Task<ActionResult> AdminRegister([FromForm]RegisterDTO registerDTO)
         {
            if(!emailExist(registerDTO.Email).Result.Value) {
 
@@ -39,7 +39,7 @@ namespace Roya.Controllers
                     City = registerDTO.City,
                     Country = registerDTO.Country
                 },
-                ImageName = "dsdasdas"
+                ImageName = DocumentSitting.addFile(registerDTO.imgNmae, "Images")
 
 
             };
@@ -53,7 +53,7 @@ namespace Roya.Controllers
 
         }
         [HttpPost("UserBuyer")]
-        public async Task<ActionResult> userBuyerRegister(RegisterDTO registerDTO)
+        public async Task<ActionResult> userBuyerRegister([FromForm]RegisterDTO registerDTO)
         {
 
             var addUserBuyer = new User()
@@ -66,7 +66,8 @@ namespace Roya.Controllers
                     City = registerDTO.City,
                     Country = registerDTO.Country
                 },
-                ImageName = "dsdasdas"
+                ImageName = DocumentSitting.addFile(registerDTO.imgNmae, "Images")
+
 
 
             };
@@ -83,7 +84,7 @@ namespace Roya.Controllers
         
 
         [HttpPost("Client")]
-        public async Task<ActionResult> ClientRegister(RegisterDTO registerDTO)
+        public async Task<ActionResult> ClientRegister([FromForm] RegisterDTO registerDTO)
         {
 
             var addClient = new User()
@@ -96,7 +97,8 @@ namespace Roya.Controllers
                     City = registerDTO.City,
                     Country = registerDTO.Country
                 },
-                ImageName = "dsdasdas"
+                ImageName = DocumentSitting.addFile(registerDTO.imgNmae, "Images")
+
 
 
             };
