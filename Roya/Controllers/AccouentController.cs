@@ -25,7 +25,10 @@ namespace Roya.Controllers
         [HttpPost("admin")]
         public async Task<ActionResult> AdminRegister(RegisterDTO registerDTO)
         {
+           if(!emailExist(registerDTO.Email).Result.Value) {
 
+                return BadRequest();            
+            }
             var addUserAdmin = new User()
             {
                 UserName = registerDTO.Name,
@@ -37,8 +40,8 @@ namespace Roya.Controllers
                     Country = registerDTO.Country
                 },
                 ImageName = "dsdasdas"
-                
-                
+
+
             };
             var result = await userManager.CreateAsync(addUserAdmin, registerDTO.Password);
             if (!result.Succeeded) return BadRequest();
@@ -47,6 +50,69 @@ namespace Roya.Controllers
                 await roleManager.CreateAsync(new IdentityRole(RoleContentHelper.Admin));
             await userManager.AddToRoleAsync(addUserAdmin, RoleContentHelper.Admin);
             return Ok(registerDTO);
+
+        }
+        [HttpPost("UserBuyer")]
+        public async Task<ActionResult> userBuyerRegister(RegisterDTO registerDTO)
+        {
+
+            var addUserBuyer = new User()
+            {
+                UserName = registerDTO.Name,
+                Email = registerDTO.Email,
+                PhoneNumber = registerDTO.PhoneNumper,
+                Addreses = new Addreses()
+                {
+                    City = registerDTO.City,
+                    Country = registerDTO.Country
+                },
+                ImageName = "dsdasdas"
+
+
+            };
+            var result = await userManager.CreateAsync(addUserBuyer, registerDTO.Password);
+            if (!result.Succeeded) return BadRequest();
+
+            if (!await roleManager.RoleExistsAsync(RoleContentHelper.UserBuyer))
+                await roleManager.CreateAsync(new IdentityRole(RoleContentHelper.UserBuyer));
+            await userManager.AddToRoleAsync(addUserBuyer, RoleContentHelper.UserBuyer);
+            return Ok(registerDTO);
+
+        }
+
+        
+
+        [HttpPost("Client")]
+        public async Task<ActionResult> ClientRegister(RegisterDTO registerDTO)
+        {
+
+            var addClient = new User()
+            {
+                UserName = registerDTO.Name,
+                Email = registerDTO.Email,
+                PhoneNumber = registerDTO.PhoneNumper,
+                Addreses = new Addreses()
+                {
+                    City = registerDTO.City,
+                    Country = registerDTO.Country
+                },
+                ImageName = "dsdasdas"
+
+
+            };
+            var result = await userManager.CreateAsync(addClient, registerDTO.Password);
+            if (!result.Succeeded) return BadRequest();
+
+            if (!await roleManager.RoleExistsAsync(RoleContentHelper.Client))
+                await roleManager.CreateAsync(new IdentityRole(RoleContentHelper.Client));
+            await userManager.AddToRoleAsync(addClient, RoleContentHelper.Client);
+            return Ok(registerDTO);
+
+        }
+        [HttpGet("emailExist")]
+        public async Task<ActionResult<bool>> emailExist([FromQuery] string email )
+        {
+            return await userManager.FindByEmailAsync(email)!=null;
 
         }
     }
