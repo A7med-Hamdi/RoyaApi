@@ -6,7 +6,7 @@
         {
             var pathFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Files", folderName);
 
-            var fileName = $"{Guid.NewGuid()}{file.FileName}";
+            var fileName = $"{file.FileName}";
             var filePath = Path.Combine(pathFolder, fileName);
 
             using var fs = new FileStream(filePath, FileMode.Create);
@@ -21,7 +21,7 @@
         public static void deleteFile(string folderName ,string fileNmae)
         {
             
-            var pathFile = Path.Combine(Directory.GetCurrentDirectory(), folderName,fileNmae);
+            var pathFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Files", folderName,fileNmae);
             if (File.Exists(pathFile))
             {
                 File.Delete(pathFile);

@@ -2,6 +2,8 @@
 using Hotel.API.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Roya.DTO;
 using Roya.helper;
 using Roya_BLL.interFaces;
@@ -16,16 +18,20 @@ namespace Roya.Controllers
     {// reposirary
         private readonly IGenercRepositry<Product> repositry;
         private readonly IMapper mapper;
+        private readonly RoyaContext context;
 
-        public ProductController(IGenercRepositry<Product> repositry ,IMapper mapper)
+        public ProductController(IGenercRepositry<Product> repositry, IMapper mapper, RoyaContext context)
         {
             this.repositry = repositry;
             this.mapper = mapper;
+            this.context = context;
         }
         [HttpPost]
         public async Task<ActionResult<Product>> addProduct([FromForm] ProductDTO product)
         {
-            if (!ModelState.IsValid) return BadRequest(new ApiErroeResponse(400,"invalid data"));
+            if (!ModelState.IsValid) return BadRequest(new ApiErroeResponse(400, "invalid data"));
+            if (product.ImagesFile == null) return BadRequest("At least Add one photo");
+
             try
             {
                 for (int i = 0; i < product.ImagesFile.Length; i++)
@@ -49,32 +55,72 @@ namespace Roya.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<productViewDTO>>> GetallProduct()
         {
-            
+
             var products = await repositry.GetAllDataAsync();
 
             var data = mapper.Map<IReadOnlyList<Product>, IReadOnlyList<productViewDTO>>(products);
+
+            //        var Products = context.Products
+            //.Include(p => p.Images)
+            //.Include(p=> p.user)
+            //.Include(p=>p.Comments)
+            //.Select(s => new
+            //{
+            //    user = s.user.UserName,
+            //    Name = s.Name,
+            //    Type = s.Type,
+            //    Description=s.Description,
+            //    address = s.address,
+            //    Price = s.Price,
+            //    Comments =s.Comments
+            //}).ToList();
+
             return Ok(data);
+
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<productViewDTO>> GetProduct(int id)
         {
             var product = await repositry.GetDataByIdAsync(id);
-            var data = mapper.Map <Product,  productViewDTO>(product);
+            var data = mapper.Map<Product, productViewDTO>(product);
 
             return Ok(data);
         }
 
         // update
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id,ProductDTO product)
+        [HttpPut("{Productid}")]
+        public async Task<ActionResult> Update(int Productid, [FromForm] ProductDTO product)
         {
 
 
-                var updateproduct = await repositry.GetDataByIdAsync(id);
+            var updateproduct = await repositry.GetDataByIdAsync(Productid);
             if (updateproduct == null)
+
                 return BadRequest();
+
+            if (product.ImagesFile != null)
+            {
+                var images = context.Images.ToList().Where(img => img.productid == Productid);
+
+                foreach (var img in images)
+                {
+                    DocumentSitting.deleteFile("images", img.Name);
+                }
+
+                context.Images.RemoveRange(context.Images.Where(x => x.productid == Productid));
+                repositry.SaveChange();
+
+
+                for (int i = 0; i < product.ImagesFile.Length; i++)
+                {
+
+                    updateproduct.Images.Add(new Image());
+                    updateproduct.Images[i].Name = DocumentSitting.addFile(product.ImagesFile[i], "images");
+                }
+            }
+
             try
             {
 
