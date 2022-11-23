@@ -1,4 +1,5 @@
-﻿using Roya_DDL.Entities;
+﻿using Roya_BLL.Spesification;
+using Roya_DDL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Roya_BLL.interFaces
         T Delete(T entity);
         Task<IReadOnlyList<T>> GetAllDataAsync();
         Task<T> GetDataByIdAsync(int id);
+        Task<IReadOnlyList<T>> GetAllDataWithSpecAsync(Ispesifaction<T> spec);
+        Task<T> GetDataByIdWithSpecAsync(Ispesifaction<T> spec);
         void SaveChange();
     }
 }

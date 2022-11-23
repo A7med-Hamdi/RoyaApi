@@ -8,6 +8,7 @@ using Roya.DTO;
 using Roya.Errors;
 using Roya.helper;
 using Roya_BLL.interFaces;
+using Roya_BLL.Spesification;
 using Roya_DDL.Entities;
 using Roya_DDL.Entities.Identity;
 
@@ -58,11 +59,13 @@ namespace Roya.Controllers
         public async Task<ActionResult<IReadOnlyList<productViewDTO>>> GetallProduct()
         {
 
-            var products = await repositry.GetAllDataAsync();
+            // var products = await repositry.GetAllDataAsync();
+            var spec = new ProductSpec();
+            var products = await repositry.GetAllDataWithSpecAsync(spec);
 
             var data = mapper.Map<IReadOnlyList<Product>, IReadOnlyList<productViewDTO>>(products);
 
-          
+
 
             return Ok(data);
 
@@ -71,7 +74,10 @@ namespace Roya.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<productViewDTO>> GetProduct(int id)
         {
-            var product = await repositry.GetDataByIdAsync(id);
+            //  var product = await repositry.GetDataByIdAsync(id);
+            var spec = new ProductSpec(id);
+            var product = await repositry.GetDataByIdWithSpecAsync(spec);
+
             var data = mapper.Map<Product, productViewDTO>(product);
 
             return Ok(data);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Roya_BLL.interFaces;
+using Roya_BLL.Spesification;
 using Roya_DDL.Entities;
 using System;
 using System.Collections.Generic;
@@ -27,10 +28,19 @@ namespace Roya_BLL.Repositries
 
                => await context.Set<T>().ToListAsync();
 
+        public async Task<IReadOnlyList<T>> GetAllDataWithSpecAsync(Ispesifaction<T> spec)
+        {
+            return await ApplySpesifacation(spec).ToListAsync();
+        }
 
         public async Task<T> GetDataByIdAsync(int id)
 
             => await context.Set<T>().FindAsync(id);
+
+        public async Task<T> GetDataByIdWithSpecAsync(Ispesifaction<T> spec)
+        {
+            return await ApplySpesifacation(spec).FirstOrDefaultAsync();
+        }
 
         public void SaveChange()
         {
@@ -39,6 +49,12 @@ namespace Roya_BLL.Repositries
 
         public T Update(T entity)
             => context.Set<T>().Update(entity).Entity;
+
+        private IQueryable<T> ApplySpesifacation(Ispesifaction<T> spec)
+        {
+            return spesificationEvalauter<T>.getQuery(context.Set<T>(), spec);
+
+        }
     }
 
 }
