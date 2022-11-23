@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roya_DDL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Roya_BLL.interFaces
 {
-    public interface IGenercRepositry<T> where T : class
+    public interface IGenercRepositry<T> where T : BaseEntity
     {
         Task Add(T entity);
         T Update(T entity);

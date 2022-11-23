@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Roya_BLL.Repositries
 {
-    public class GenericRepositry<T> : IGenercRepositry<T> where T : class
+    public class GenericRepositry<T> : IGenercRepositry<T> where T : BaseEntity
     {
         private readonly RoyaContext context;
 
         public GenericRepositry(RoyaContext _context)
         {
-           context = _context;
+            context = _context;
         }
         public async Task Add(T entity)
             => await context.Set<T>().AddAsync(entity);
@@ -24,11 +24,12 @@ namespace Roya_BLL.Repositries
             => context.Set<T>().Remove(entity).Entity;
 
         public async Task<IReadOnlyList<T>> GetAllDataAsync()
-            
-            => await context.Set<T>().ToListAsync();
+
+               => await context.Set<T>().ToListAsync();
+
 
         public async Task<T> GetDataByIdAsync(int id)
-       
+
             => await context.Set<T>().FindAsync(id);
 
         public void SaveChange()
@@ -36,8 +37,8 @@ namespace Roya_BLL.Repositries
             context.SaveChanges();
         }
 
-        public  T Update(T entity)
-            =>  context.Set<T>().Update(entity).Entity;
+        public T Update(T entity)
+            => context.Set<T>().Update(entity).Entity;
     }
 
 }
