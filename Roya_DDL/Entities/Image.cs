@@ -10,10 +10,7 @@ namespace Roya_DDL.Entities
     public class Image : BaseEntity
     {
         public string Name { get; set; }
-        public string? Description { get; set; }
 
-        [ForeignKey("product")]
         public int productid { get; set; }
-        public virtual Product product { get; set; }
     }
 }

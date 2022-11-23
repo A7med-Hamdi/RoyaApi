@@ -11,6 +11,7 @@ using Roya_BLL.interFaces;
 using Roya_BLL.Spesification;
 using Roya_DDL.Entities;
 using Roya_DDL.Entities.Identity;
+using System.Data;
 
 namespace Roya.Controllers
 {
@@ -29,9 +30,14 @@ namespace Roya.Controllers
             this.context = context;
         }
         [HttpPost]
-        [Authorize(Roles = RoleContentHelper.Admin)]
+        [Authorize(Roles = "Admin,UserBuyer")]
+
+        
         public async Task<ActionResult<Product>> addProduct([FromForm] ProductDTO product)
         {
+         
+          
+        
             if (!ModelState.IsValid) return BadRequest(new ApiErroeResponse(400, "invalid data"));
             if (product.ImagesFile == null) return BadRequest("At least Add one photo");
 
@@ -160,6 +166,13 @@ namespace Roya.Controllers
             return Ok(" Delete Done");
         }
 
+        [HttpPost("addComment")]
+        public  ActionResult<Comment> addComent(Comment comment)
 
+        {
+            var AddComent =  context.Comments.Add(comment);
+             context.SaveChanges();
+            return Ok("Done");
+        }
     }
 }

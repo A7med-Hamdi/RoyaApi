@@ -20,14 +20,12 @@ namespace Roya_DDL.Entities
         public bool Aprove { get; set; } = false;
         public virtual List<Image>? Images { get; set; } = new List<Image>();
 
-        public virtual FavoritList FavoritList { get; set; }
-        public virtual Booking Bookings { get; set; } 
+
+        public virtual List<Booking> Bookings { get; set; } 
 
         public virtual List<Comment> Comments { get; set; } = new List<Comment>();
-        [ForeignKey("user")]
 
         public string UserId { get; set; }
-        public virtual User user { get; set; }
 
     }
 }

@@ -1,13 +1,16 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Roya.DTO;
 using Roya.Errors;
+using Roya.Extaintions;
 using Roya.helper;
 using Roya_BLL.interFaces;
 using Roya_DDL.Entities.Identity;
+using System.Security.Claims;
 
 namespace Roya.Controllers
 {
@@ -20,7 +23,7 @@ namespace Roya.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ITokenService token;
 
-        public AccouentController(UserManager<User> userManager , SignInManager<User> signInManager ,RoleManager<IdentityRole> roleManager, ITokenService token)
+        public AccouentController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, ITokenService token)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -28,13 +31,14 @@ namespace Roya.Controllers
             this.token = token;
         }
         [HttpPost("admin")]
-        public async Task<ActionResult> AdminRegister([FromForm]RegisterDTO registerDTO)
+        public async Task<ActionResult> AdminRegister([FromForm] RegisterDTO registerDTO)
         {
-           if(emailExist(registerDTO.Email).Result.Value) {
+            if (emailExist(registerDTO.Email).Result.Value)
+            {
 
-                return BadRequest(new ApiErroeResponse(400, "this Email is Already in use ! "));            
+                return BadRequest(new ApiErroeResponse(400, "this Email is Already in use ! "));
             }
-           
+
             var addUserAdmin = new User()
             {
                 UserName = registerDTO.Name,
@@ -60,7 +64,7 @@ namespace Roya.Controllers
 
         }
         [HttpPost("UserBuyer")]
-        public async Task<ActionResult> userBuyerRegister([FromForm]RegisterDTO registerDTO)
+        public async Task<ActionResult> userBuyerRegister([FromForm] RegisterDTO registerDTO)
         {
             if (emailExist(registerDTO.Email).Result.Value)
             {
@@ -93,7 +97,7 @@ namespace Roya.Controllers
 
         }
 
-        
+
 
         [HttpPost("Client")]
         public async Task<ActionResult> ClientRegister([FromForm] RegisterDTO registerDTO)
@@ -128,9 +132,9 @@ namespace Roya.Controllers
 
         }
         [HttpGet("emailExist")]
-        public async Task<ActionResult<bool>> emailExist([FromQuery] string email )
+        public async Task<ActionResult<bool>> emailExist([FromQuery] string email)
         {
-            return await userManager.FindByEmailAsync(email)!=null;
+            return await userManager.FindByEmailAsync(email) != null;
 
         }
 
@@ -158,7 +162,70 @@ namespace Roya.Controllers
 
             return Ok(authUser);
         }
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<CurrentUserDTO>> CurrentUser()
+        {
+
+
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var user = await userManager.FindByEmailWithAddressAsync(User);
+            var role = await userManager.GetRolesAsync(user);
+            if (role[0] == "Admin")
+            {
+                return Ok
+              (new CurrentUserDTO()
+              {
+                  Email = email,
+                  Role = role[0],
+                  Name = user.UserName,
+                  Phone = user.PhoneNumber,
+                  City = user.Addreses.City,
+                  Country = user.Addreses.Country,
+
+              }
+              );
+            }
+            if (role[0] == "Client")
+            {
+                return Ok
+              (new CurrentUserDTO()
+              {
+                  Email = email,
+                  Role = role[0],
+                  Name = user.UserName,
+                  Phone = user.PhoneNumber,
+                  City = user.Addreses.City,
+                  Bookings = user.Bookings,
+                  Country = user.Addreses.Country,
+                  FavoritLists = user.FavoritLists
+
+              }
+              );
+            }
+
+            if (role[0] == "UserBuyer")
+            {
+                return Ok
+              (new CurrentUserDTO()
+              {
+                  Email = email,
+                  Role = role[0],
+                  Name = user.UserName,
+                  Phone = user.PhoneNumber,
+                  City = user.Addreses.City,
+                  Bookings = user.Bookings,
+                  Products = user.Products,
+                  Country = user.Addreses.Country,
+                  FavoritLists = user.FavoritLists
+
+              }
+              );
+            }
+                return Ok("you have to login");
+
+        }
+
+
     }
-
-
 }

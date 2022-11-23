@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Roya_DDL.Entities;
 
@@ -11,9 +12,10 @@ using Roya_DDL.Entities;
 namespace Roya_DDL.Migrations
 {
     [DbContext(typeof(RoyaContext))]
-    partial class RoyaContextModelSnapshot : ModelSnapshot
+    [Migration("20221123120026_v8")]
+    partial class v8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,7 +180,8 @@ namespace Roya_DDL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -187,31 +190,22 @@ namespace Roya_DDL.Migrations
 
             modelBuilder.Entity("Roya_DDL.Entities.Comment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "ProductId");
 
                     b.HasIndex("ProductId");
 
@@ -235,7 +229,8 @@ namespace Roya_DDL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -345,6 +340,9 @@ namespace Roya_DDL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -453,33 +451,47 @@ namespace Roya_DDL.Migrations
 
             modelBuilder.Entity("Roya_DDL.Entities.Booking", b =>
                 {
-                    b.HasOne("Roya_DDL.Entities.Product", null)
-                        .WithMany("Bookings")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("Roya_DDL.Entities.Product", "productbooking")
+                        .WithOne("Bookings")
+                        .HasForeignKey("Roya_DDL.Entities.Booking", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Roya_DDL.Entities.Identity.User", null)
+                    b.HasOne("Roya_DDL.Entities.Identity.User", "userbooking")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("productbooking");
+
+                    b.Navigation("userbooking");
                 });
 
             modelBuilder.Entity("Roya_DDL.Entities.Comment", b =>
                 {
-                    b.HasOne("Roya_DDL.Entities.Product", null)
+                    b.HasOne("Roya_DDL.Entities.Product", "productcomment")
                         .WithMany("Comments")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Roya_DDL.Entities.Identity.User", "usercomment")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("productcomment");
+
+                    b.Navigation("usercomment");
                 });
 
             modelBuilder.Entity("Roya_DDL.Entities.FavoritList", b =>
                 {
                     b.HasOne("Roya_DDL.Entities.Product", "productfavourite")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                        .WithOne("FavoritList")
+                        .HasForeignKey("Roya_DDL.Entities.FavoritList", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -507,11 +519,13 @@ namespace Roya_DDL.Migrations
 
             modelBuilder.Entity("Roya_DDL.Entities.Image", b =>
                 {
-                    b.HasOne("Roya_DDL.Entities.Product", null)
+                    b.HasOne("Roya_DDL.Entities.Product", "product")
                         .WithMany("Images")
                         .HasForeignKey("productid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("Roya_DDL.Entities.Product", b =>
@@ -527,6 +541,8 @@ namespace Roya_DDL.Migrations
                 {
                     b.Navigation("Bookings");
 
+                    b.Navigation("Comments");
+
                     b.Navigation("FavoritLists");
 
                     b.Navigation("Products");
@@ -534,9 +550,13 @@ namespace Roya_DDL.Migrations
 
             modelBuilder.Entity("Roya_DDL.Entities.Product", b =>
                 {
-                    b.Navigation("Bookings");
+                    b.Navigation("Bookings")
+                        .IsRequired();
 
                     b.Navigation("Comments");
+
+                    b.Navigation("FavoritList")
+                        .IsRequired();
 
                     b.Navigation("Images");
                 });

@@ -29,7 +29,6 @@ namespace Roya_DDL.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
-            modelBuilder.Entity<Comment>().HasKey("UserId", "ProductId");
             base.OnModelCreating(modelBuilder);
         }
     }

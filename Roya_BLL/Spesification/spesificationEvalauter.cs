@@ -8,7 +8,7 @@ using Roya_DDL.Entities;
 
 namespace Roya_BLL.Spesification
 {
-    public class spesificationEvalauter<T> where T : BaseEntity
+    public class spesificationEvalauter<T> where T : class
     {
         public static IQueryable<T> getQuery(IQueryable<T> inputQuery, Ispesifaction<T> spec)
         {

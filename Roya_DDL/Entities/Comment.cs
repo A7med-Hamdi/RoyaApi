@@ -9,19 +9,16 @@ using System.Threading.Tasks;
 
 namespace Roya_DDL.Entities
 {
-    public class Comment 
+    public class Comment : BaseEntity
     {
         public DateTime DateTime { get; set; }
         public string text { get; set; }
-        [Key, Column(Order = 1)]
-        [ForeignKey("usercomment")]
-        public string UserId { get; set; }
-        public virtual User usercomment { get; set; }
-        [Key, Column(Order = 2)]
-        [ForeignKey("productcomment")]
+ 
+        public string UserName { get; set; }
+        public string UserImage { get; set; }
 
         public int ProductId { get; set; }
-        public virtual Product productcomment { get; set; }
+       
        
     }
 }

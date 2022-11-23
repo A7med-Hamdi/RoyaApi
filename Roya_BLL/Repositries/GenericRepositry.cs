@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Roya_BLL.Repositries
 {
-    public class GenericRepositry<T> : IGenercRepositry<T> where T : BaseEntity
+    public class GenericRepositry<T> : IGenercRepositry<T> where T : class
     {
         private readonly RoyaContext context;
 
         public GenericRepositry(RoyaContext _context)
         {
-            context = _context;
+           context = _context;
         }
         public async Task Add(T entity)
             => await context.Set<T>().AddAsync(entity);
@@ -25,31 +25,28 @@ namespace Roya_BLL.Repositries
             => context.Set<T>().Remove(entity).Entity;
 
         public async Task<IReadOnlyList<T>> GetAllDataAsync()
-
-               => await context.Set<T>().ToListAsync();
-
-        public async Task<IReadOnlyList<T>> GetAllDataWithSpecAsync(Ispesifaction<T> spec)
-        {
-            return await ApplySpesifacation(spec).ToListAsync();
-        }
+            
+            => await context.Set<T>().ToListAsync();
 
         public async Task<T> GetDataByIdAsync(int id)
-
+       
             => await context.Set<T>().FindAsync(id);
-
-        public async Task<T> GetDataByIdWithSpecAsync(Ispesifaction<T> spec)
-        {
-            return await ApplySpesifacation(spec).FirstOrDefaultAsync();
-        }
 
         public void SaveChange()
         {
             context.SaveChanges();
         }
 
-        public T Update(T entity)
-            => context.Set<T>().Update(entity).Entity;
-
+        public  T Update(T entity)
+            =>  context.Set<T>().Update(entity).Entity;
+        public async Task<IReadOnlyList<T>> GetAllDataWithSpecAsync(Ispesifaction<T> spec)
+        {
+            return await ApplySpesifacation(spec).ToListAsync();
+        }
+        public async Task<T> GetDataByIdWithSpecAsync(Ispesifaction<T> spec)
+        {
+            return await ApplySpesifacation(spec).FirstOrDefaultAsync();
+        }
         private IQueryable<T> ApplySpesifacation(Ispesifaction<T> spec)
         {
             return spesificationEvalauter<T>.getQuery(context.Set<T>(), spec);

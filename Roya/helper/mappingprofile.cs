@@ -13,7 +13,7 @@ namespace Roya.helper
                   
                      .ForMember(d => d.Images, o => o.MapFrom(s => s.Images.Select(m=>m.Name)))
 
-                     .ForMember(d => d.Comments, o => o.MapFrom(s => s.Comments.Select(c => new { c.text, c.DateTime })));
+                     .ForMember(d => d.Comments, o => o.MapFrom(s => s.Comments.Select(c => new { c.text, c.DateTime,c.UserName , c.UserImage })));
 
             CreateMap<ProductDTO, Product>();
                   

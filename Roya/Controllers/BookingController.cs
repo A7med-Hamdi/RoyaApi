@@ -35,6 +35,8 @@ namespace Roya.Controllers
 
                     
                 };
+                await this.repositry.Add( AddBooking );
+                 repositry.SaveChange();
             }
             catch (Exception ex)
             {
