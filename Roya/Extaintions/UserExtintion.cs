@@ -11,7 +11,7 @@ namespace Roya.Extaintions
         public static async Task<User> FindByEmailWithAddressAsync(this UserManager<User> userManager, ClaimsPrincipal claims)
         {
             var email = claims.FindFirstValue(ClaimTypes.Email);
-            return await userManager.Users.Include(u => u.Addreses).Include(u => u.Products).ThenInclude(p => p.Images).Include(u => u.Bookings).Include(u => u.FavoritLists).SingleOrDefaultAsync(u => u.Email == email);
+            return await userManager.Users.Include(u => u.Addreses).Include(u => u.Products).ThenInclude(p => p.Images).Include(u => u.Bookings).Include(u => u.FavoritLists).ThenInclude(f => f.productfavourite).ThenInclude(i => i.Images).SingleOrDefaultAsync(u => u.Email == email);
 
         }
     }

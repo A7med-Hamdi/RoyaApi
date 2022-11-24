@@ -483,15 +483,13 @@ namespace Roya_DDL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Roya_DDL.Entities.Identity.User", "userfavorite")
+                    b.HasOne("Roya_DDL.Entities.Identity.User", null)
                         .WithMany("FavoritLists")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("productfavourite");
-
-                    b.Navigation("userfavorite");
                 });
 
             modelBuilder.Entity("Roya_DDL.Entities.Identity.User", b =>

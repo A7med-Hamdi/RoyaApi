@@ -51,24 +51,15 @@ namespace Roya.Controllers
 
             return Ok(Favourite);
         }
-        [HttpGet("GetFavouriteByProductId")]
-        public async Task<ActionResult<Booking>> GetFavouriteByProductId(int productId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Booking>> GetFavouriteByProductId(int id)
         {
-            var Favouritelist = await repositry.GetAllDataAsync();
-            var  Favourite= Favouritelist.Where(b => b.ProductId == productId);
+            var Favouritelist = await repositry.GetDataByIdAsync(id);
 
 
-            return Ok(Favourite);
+            return Ok(Favouritelist);
         }
-        [HttpGet("GetUserByUserId")]
-        public async Task<ActionResult<Booking>> GetUserByUserId(string userId)
-        {
-            var Favouritelist = await repositry.GetAllDataAsync();
-            var Favourite = Favouritelist.Where(b => b.UserId == userId);
-
-
-            return Ok(Favourite);
-        }
+       
         //delete  
         [HttpDelete]
 

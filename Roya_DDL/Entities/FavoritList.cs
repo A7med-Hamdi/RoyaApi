@@ -17,9 +17,9 @@ namespace Roya_DDL.Entities
        // public virtual User userfavorite { get; set; }
   
        
-        //[ForeignKey("productfavourite")]
+        [ForeignKey("productfavourite")]
         public int ProductId { get; set; }
-        //public virtual Product productfavourite { get; set; }
+        public virtual Product productfavourite { get; set; }
 
     }
 }
