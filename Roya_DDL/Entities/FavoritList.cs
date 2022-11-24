@@ -12,14 +12,14 @@ namespace Roya_DDL.Entities
     public class FavoritList :BaseEntity
     {
 
-        [ForeignKey("userfavorite")]
+        //[ForeignKey("userfavorite")]
         public string UserId { get; set; }
-        public virtual User userfavorite { get; set; }
+       // public virtual User userfavorite { get; set; }
   
        
-        [ForeignKey("productfavourite")]
+        //[ForeignKey("productfavourite")]
         public int ProductId { get; set; }
-        public virtual Product productfavourite { get; set; }
+        //public virtual Product productfavourite { get; set; }
 
     }
 }

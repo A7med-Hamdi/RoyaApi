@@ -151,11 +151,10 @@ namespace Roya.Controllers
 
         public async Task<ActionResult> Delete(int id)
         {
-            if (id == null)
-                return NotFound();
+          
             var data = await repositry.GetDataByIdAsync(id);
             if (data == null)
-                return NotFound();
+                return NotFound(new ApiErroeResponse(400, "this book not found"));
             var images = context.Images.ToList().Where(img => img.productid == id);
             foreach (var img in images)
             {

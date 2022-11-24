@@ -155,7 +155,9 @@ namespace Roya.Controllers
             {
                 UserName = user.UserName,
                 Roles = userRole[0],
-                Token = await token.CreateToken(user, userManager)
+                Token = await token.CreateToken(user, userManager),
+                UserId=user.Id
+                
 
             };
 

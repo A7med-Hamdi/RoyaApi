@@ -61,5 +61,28 @@ namespace Roya.Controllers
 
             return Ok(book) ;
         }
+        [HttpGet("GetBookingByUserId")]
+        public async Task<ActionResult<Booking>> GetBookingByUserId(string userId)
+        {
+            var Bookings = await repositry.GetAllDataAsync();
+            var book = Bookings.Where(b => b.UserId == userId);
+
+
+            return Ok(book);
+        }
+        //delete  
+        [HttpDelete]
+
+        public async Task<ActionResult> Delete(int id)
+        {
+         
+            var data = await repositry.GetDataByIdAsync(id);
+            if (data == null)
+                return NotFound(new ApiErroeResponse(400,"this book not found") );
+          
+            repositry.Delete(data);
+            repositry.SaveChange();
+            return Ok(" Delete Done");
+        }
     }
 }
