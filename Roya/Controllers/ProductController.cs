@@ -147,7 +147,7 @@ namespace Roya.Controllers
         }
 
         //delete  
-        [HttpDelete]
+        [HttpDelete("{id}")]
 
         public async Task<ActionResult> Delete(int id)
         {

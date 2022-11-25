@@ -13,13 +13,13 @@
             using var fs = new FileStream(filePath, FileMode.Create);
 
             file.CopyTo(fs);
-            return $"http://royaiti-001-site1.gtempurl.com/files/imgs/{fileName}"; ;
+            return $"http://royaiti-001-site1.gtempurl.com/Files/Images/{fileName}"; ;
         }
 
         public static void deleteFile(string folderName ,string fileNmae)
         {
 
-            string[] words = fileNmae.Split("http://royaiti-001-site1.gtempurl.com/files/imgs/");
+            string[] words = fileNmae.Split("http://royaiti-001-site1.gtempurl.com/Files/Images/");
             fileNmae = words[1];
             var pathFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Files", folderName,fileNmae);
             if (File.Exists(pathFile))
