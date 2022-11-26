@@ -12,37 +12,39 @@ namespace Roya_BLL.Spesification
         public Expression<Func<T, bool>> Crataira { get; set; }
         public List<Expression<Func<T, object>>> Includes { get; set; }=new List<Expression<Func<T, object>>>();
         public Expression<Func<T, object>> OrderBy { get; set; }
-        public Expression<Func<T, object>> OrderByDesc { get;set; }
+        public Expression<Func<T, object>> OrderByDesc { get; set; }
         public int Take { get; set; }
-        public int Skip { get;set;}
-        public bool PganationEnabled { get; set; }
-
-        public BaseSpesifaction(Expression<Func<T, bool>> crataira)
-        {
-            Crataira = crataira;
-           
-        }
+        public int Skip { get; set; }
+        public bool IsPagingEnvled { get; set; }
         public BaseSpesifaction()
         {
 
         }
-        public void addIncludes(Expression<Func<T, object>> include)
+        public BaseSpesifaction(Expression<Func<T, bool>> criteria)
         {
-            Includes.Add(include);
+            Crataira = criteria;
         }
-        public void AddOrderBy(Expression<Func<T,object>> orderby)
+
+        public void AddInclude(Expression<Func<T, object>> includeExpretions)
         {
-           OrderBy=orderby;
+
+            Includes.Add(includeExpretions);
+
         }
-        public void AddOrderByDesc(Expression<Func<T,object>>orderbydesc)
+
+        public void AddOrderBy(Expression<Func<T, object>> orderByExpration)
         {
-            OrderByDesc=orderbydesc;
+            OrderBy = orderByExpration;
         }
-        public void Paganation(int take,int skip)
+        public void AddOrderByDesc(Expression<Func<T, object>> orderByDescExpretions)
         {
-            Take = take;
+            OrderByDesc = orderByDescExpretions;
+        }
+        public void ApplyPaging(int skip, int take)
+        {
             Skip = skip;
-            PganationEnabled = true;
+            Take = take;
+            IsPagingEnvled = true;
         }
     }
 }

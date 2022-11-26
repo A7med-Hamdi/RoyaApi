@@ -19,7 +19,7 @@ namespace Roya_BLL.Spesification
                 query = query.OrderBy(spec.OrderBy);
             if(spec.OrderByDesc!=null)
                 query=query.OrderByDescending(spec.OrderByDesc);
-            if(spec.PganationEnabled)
+            if(spec.IsPagingEnvled)
                 query=query.Skip(spec.Skip).Take(spec.Take);
 
             query = spec.Includes.Aggregate(query, (currentQuery, include) => currentQuery.Include(include));

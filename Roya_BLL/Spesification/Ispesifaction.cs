@@ -15,9 +15,8 @@ namespace Roya_BLL.Spesification
         public Expression<Func<T, object>> OrderByDesc { get; set; }
         public int Take { get; set; }
         public int Skip { get; set; }
-        public bool PganationEnabled { get; set; }
+        public bool IsPagingEnvled { get; set; }
 
-       
 
 
     }

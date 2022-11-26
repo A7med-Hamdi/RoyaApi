@@ -11,9 +11,9 @@ namespace Roya_BLL.Spesification
     {
         public ProductSpec(ProductParams productParams) : base(c => productParams.city==null ||productParams.city == c.address)
         {
-            addIncludes(i => i.Images);
-            addIncludes(c => c.Comments);
-            Paganation(productParams.PageSize *(productParams.PageIndex-1),productParams.PageSize);
+            AddInclude(i => i.Images);
+            AddInclude(c => c.Comments);
+            ApplyPaging(productParams.PageSize *(productParams.PageIndex-1),productParams.PageSize);
             AddOrderBy(p => p.Name);
 
             if (!string.IsNullOrEmpty(productParams.Sort))
@@ -34,8 +34,8 @@ namespace Roya_BLL.Spesification
         }
         public ProductSpec(int id) : base(b => b.Id == id)
         {
-            addIncludes(i => i.Images);
-            addIncludes(c => c.Comments);
+            AddInclude(i => i.Images);
+            AddInclude(c => c.Comments);
         }
 
     }
