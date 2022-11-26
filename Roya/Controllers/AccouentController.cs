@@ -158,6 +158,8 @@ namespace Roya.Controllers
                 Token = await token.CreateToken(user, userManager),
                 UserId=user.Id
                 
+                
+                
 
             };
 
@@ -184,6 +186,7 @@ namespace Roya.Controllers
                   Phone = user.PhoneNumber,
                   City = user.Addreses.City,
                   Country = user.Addreses.Country,
+                  Image = user.ImageName
 
               }
               );
@@ -200,7 +203,9 @@ namespace Roya.Controllers
                   City = user.Addreses.City,
                   Bookings = user.Bookings,
                   Country = user.Addreses.Country,
-                  FavoritLists = user.FavoritLists
+                  FavoritLists = user.FavoritLists,
+                  Image = user.ImageName
+
 
               }
               );
@@ -219,7 +224,9 @@ namespace Roya.Controllers
                   Bookings = user.Bookings,
                   Products = user.Products,
                   Country = user.Addreses.Country,
-                  FavoritLists = user.FavoritLists
+                  FavoritLists = user.FavoritLists,
+                  Image = user.ImageName
+
 
               }
               );
