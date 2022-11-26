@@ -52,6 +52,9 @@ namespace Roya_BLL.Repositries
             return spesificationEvalauter<T>.getQuery(context.Set<T>(), spec);
 
         }
+
+        public async Task<int> GetCountASync(Ispesifaction<T> spec)
+        => await ApplySpesifacation(spec).CountAsync();
     }
 
 }

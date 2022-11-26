@@ -15,6 +15,7 @@ namespace Roya_BLL.interFaces
         Task<IReadOnlyList<T>> GetAllDataAsync();
         Task<IReadOnlyList<T>> GetAllDataWithSpecAsync(Ispesifaction<T> spec);
         Task<T> GetDataByIdWithSpecAsync(Ispesifaction<T> spec);
+        Task<int> GetCountASync(Ispesifaction<T> spec);
         Task<T> GetDataByIdAsync(int id);
         void SaveChange();
     }

@@ -62,18 +62,21 @@ namespace Roya.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<productViewDTO>>> GetallProduct()
+        public async Task<ActionResult<IReadOnlyList<Paganation<productViewDTO>>>> GetallProduct([FromQuery]ProductParams productParams)
         {
 
             // var products = await repositry.GetAllDataAsync();
-            var spec = new ProductSpec();
+            var spec = new ProductSpec(productParams);
+            var countSpec=new productFilterwithcount(productParams);
+            var totalItems= await repositry.GetCountASync(countSpec);
+
             var products = await repositry.GetAllDataWithSpecAsync(spec);
 
             var data = mapper.Map<IReadOnlyList<Product>, IReadOnlyList<productViewDTO>>(products);
+            
+            var pagnation = new Paganation<productViewDTO>(productParams.PageIndex, productParams.PageSize,totalItems,data);
 
-
-
-            return Ok(data);
+            return Ok(pagnation);
 
         }
 
