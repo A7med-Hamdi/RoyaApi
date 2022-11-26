@@ -53,7 +53,7 @@ namespace Roya.Controllers
                 var Addproduct = mapper.Map<Product>(product);
                 await repositry.Add(Addproduct);
                 repositry.SaveChange();
-                return Ok("Done");
+                return Ok(Addproduct);
 
             }
             catch (Exception ex)

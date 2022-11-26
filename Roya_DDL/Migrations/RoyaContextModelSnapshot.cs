@@ -271,7 +271,7 @@ namespace Roya_DDL.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("AddresesId")
+                    b.Property<int?>("AddresesId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -286,7 +286,6 @@ namespace Roya_DDL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ImageName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -496,9 +495,7 @@ namespace Roya_DDL.Migrations
                 {
                     b.HasOne("Roya_DDL.Entities.Identity.Addreses", "Addreses")
                         .WithMany()
-                        .HasForeignKey("AddresesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddresesId");
 
                     b.Navigation("Addreses");
                 });

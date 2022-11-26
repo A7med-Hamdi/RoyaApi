@@ -9,6 +9,7 @@ using Roya.Errors;
 using Roya.Extaintions;
 using Roya.helper;
 using Roya_BLL.interFaces;
+using Roya_DDL.Entities;
 using Roya_DDL.Entities.Identity;
 using System.Security.Claims;
 
@@ -22,16 +23,18 @@ namespace Roya.Controllers
         private readonly SignInManager<User> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ITokenService token;
+        private readonly RoyaContext royaContext;
 
-        public AccouentController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, ITokenService token)
+        public AccouentController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, ITokenService token , RoyaContext royaContext)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
             this.token = token;
+            this.royaContext = royaContext;
         }
         [HttpPost("admin")]
-        public async Task<ActionResult> AdminRegister([FromForm] RegisterDTO registerDTO)
+        public async Task<ActionResult> AdminRegister( RegisterDTO registerDTO)
         {
             if (emailExist(registerDTO.Email).Result.Value)
             {
@@ -43,13 +46,7 @@ namespace Roya.Controllers
             {
                 UserName = registerDTO.Name,
                 Email = registerDTO.Email,
-                PhoneNumber = registerDTO.PhoneNumper,
-                Addreses = new Addreses()
-                {
-                    City = registerDTO.City,
-                    Country = registerDTO.Country
-                },
-                ImageName = DocumentSitting.addFile(registerDTO.imgNmae, "Images")
+
 
 
             };
@@ -235,6 +232,35 @@ namespace Roya.Controllers
 
         }
 
+
+        [HttpDelete("deleteUser/{email}")]
+        public async Task<ActionResult<bool>> DeleteUser(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+           
+            
+                var result = await userManager.DeleteAsync(user);
+                return Ok(result);
+
+            
+
+            return true;
+        }
+        [HttpGet("getAllUser")]
+        public async Task<ActionResult<allUserDTO>> GetAllUser()
+        {
+
+
+            var context = royaContext.Users.ToList();
+            var userData = new List<allUserDTO>();
+            foreach (var user in context)
+            {
+                var Role = await userManager.GetRolesAsync(user);
+                userData.Add(new allUserDTO() { UserName = user.UserName, Email = user.Email, Role = Role[0] });
+
+            }
+            return Ok(userData);
+        }
 
     }
 }
