@@ -10,8 +10,8 @@
         public string address { get; set; }
         public  List<string> Images { get; set; }=new List<string>();
 
- 
-        public  List<string> Comments { get; set; } =new List<string>();
+        public bool Aprove { get; set; }
+        public List<string> Comments { get; set; } =new List<string>();
 
     }
 }

@@ -14,7 +14,6 @@ namespace Roya.DTO
         public decimal Price { get; set; }
         public string  address { get; set; }
         public string  UserId { get; set; }
-        public bool  Approve { get; set; }
         public IFormFile[]? ImagesFile { get; set; }
         public List<Image>? Images { get; set; } = new List<Image>();
 

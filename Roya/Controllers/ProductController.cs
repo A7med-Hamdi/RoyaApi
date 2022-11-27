@@ -12,6 +12,7 @@ using Roya_BLL.Spesification;
 using Roya_DDL.Entities;
 using Roya_DDL.Entities.Identity;
 using System.Data;
+using System.Security.Cryptography;
 
 namespace Roya.Controllers
 {
@@ -152,7 +153,7 @@ namespace Roya.Controllers
         // update Status
 
         [HttpPut("Status")]
-        public async Task<ActionResult> UpdateStatus(int Productid,  bool Status)
+        public async Task<ActionResult> UpdateStatus([FromBody] int Productid)
         {
 
 
@@ -164,17 +165,46 @@ namespace Roya.Controllers
             try
             {
 
-                updateproduct.Aprove = Status;
+                updateproduct.Aprove = true;
 
-                repositry.Update(updateproduct);
+               repositry.Update(updateproduct);
                 repositry.SaveChange();
-                return Created("done", updateproduct);
+
+                var prpoveTrue = context.Products.Select(p => p).Where(p => p.Aprove == false);
+                return Created("done", prpoveTrue);
 
             }
             catch (Exception ex)
             {
                 return BadRequest(ex);
             }
+
+        }   
+        // update Status
+
+        [HttpGet("StatusFalse")]
+        public async Task<ActionResult> GetStatusFalse()
+        {
+
+
+       
+
+                var prpoveTrue = context.Products.Select(p => p).Where(p => p.Aprove == false);
+          
+            
+                return Ok(prpoveTrue);
+
+        }  [HttpGet("Statustrue")]
+        public async Task<ActionResult> GetStatusTrue()
+        {
+
+
+       
+
+                var prpoveTrue = context.Products.Select(p => p).Where(p => p.Aprove == true);
+          
+            
+                return Ok(prpoveTrue);
 
         }
 
