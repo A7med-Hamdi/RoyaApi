@@ -32,12 +32,12 @@ namespace Roya.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin,UserBuyer")]
 
-        
+
         public async Task<ActionResult<Product>> addProduct([FromForm] ProductDTO product)
         {
-         
-          
-        
+
+
+
             if (!ModelState.IsValid) return BadRequest(new ApiErroeResponse(400, "invalid data"));
             if (product.ImagesFile == null) return BadRequest("At least Add one photo");
 
@@ -62,19 +62,19 @@ namespace Roya.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Paganation<productViewDTO>>>> GetallProduct([FromQuery]ProductParams productParams)
+        public async Task<ActionResult<IReadOnlyList<Paganation<productViewDTO>>>> GetallProduct([FromQuery] ProductParams productParams)
         {
 
             // var products = await repositry.GetAllDataAsync();
             var spec = new ProductSpec(productParams);
-            var countSpec=new productFilterwithcount(productParams);
-            var totalItems= await repositry.GetCountASync(countSpec);
+            var countSpec = new productFilterwithcount(productParams);
+            var totalItems = await repositry.GetCountASync(countSpec);
 
             var products = await repositry.GetAllDataWithSpecAsync(spec);
 
             var data = mapper.Map<IReadOnlyList<Product>, IReadOnlyList<productViewDTO>>(products);
-            
-            var pagnation = new Paganation<productViewDTO>(productParams.PageIndex, productParams.PageSize,totalItems,data);
+
+            var pagnation = new Paganation<productViewDTO>(productParams.PageIndex, productParams.PageSize, totalItems, data);
 
             return Ok(pagnation);
 
@@ -149,12 +149,41 @@ namespace Roya.Controllers
 
         }
 
+        // update Status
+
+        [HttpPut("Status")]
+        public async Task<ActionResult> UpdateStatus(int Productid,  bool Status)
+        {
+
+
+            var updateproduct = await repositry.GetDataByIdAsync(Productid);
+            if (updateproduct == null)
+
+                return BadRequest();
+
+            try
+            {
+
+                updateproduct.Aprove = Status;
+
+                repositry.Update(updateproduct);
+                repositry.SaveChange();
+                return Created("done", updateproduct);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+        }
+
         //delete  
         [HttpDelete("{id}")]
 
         public async Task<ActionResult> Delete(int id)
         {
-          
+
             var data = await repositry.GetDataByIdAsync(id);
             if (data == null)
                 return NotFound(new ApiErroeResponse(400, "this book not found"));
@@ -169,11 +198,11 @@ namespace Roya.Controllers
         }
 
         [HttpPost("addComment")]
-        public  ActionResult<Comment> addComent(Comment comment)
+        public ActionResult<Comment> addComent(Comment comment)
 
         {
-            var AddComent =  context.Comments.Add(comment);
-             context.SaveChanges();
+            var AddComent = context.Comments.Add(comment);
+            context.SaveChanges();
             return Ok("Done");
         }
     }
