@@ -22,16 +22,20 @@ namespace Roya.Controllers
             this.user = user;
         }
         [HttpPost]
-        public async Task<ActionResult<Booking>> AddBooking(int productId, string userId)
+        public async Task<ActionResult<Booking>> AddBooking(Booking booking)
+
         {
            
             try
             {
                 var AddBooking = new Booking()
                 {
-                    UserId = userId,
-                    ProductId = productId,
+                    UserId = booking.UserId,
+                    ProductId = booking.ProductId,
                     Stutes = false,
+                    UserEmail = booking.UserEmail,
+                    ProductName = booking.ProductName,
+                    UserName   = booking.UserName,
 
                     
                 };
@@ -71,7 +75,7 @@ namespace Roya.Controllers
             return Ok(book);
         }
         //delete  
-        [HttpDelete]
+        [HttpDelete("{id}")]
 
         public async Task<ActionResult> Delete(int id)
         {
