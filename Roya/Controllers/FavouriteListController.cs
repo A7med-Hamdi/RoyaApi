@@ -15,11 +15,13 @@ namespace Roya.Controllers
     {
         private readonly IGenercRepositry<FavoritList> repositry;
         private readonly UserManager<User> user;
+        private readonly RoyaContext context;
 
-        public FavouriteListController(IGenercRepositry<FavoritList> repositry, UserManager<User> user)
+        public FavouriteListController(IGenercRepositry<FavoritList> repositry, UserManager<User> user, RoyaContext context)
         {
             this.repositry = repositry;
             this.user = user;
+            this.context = context;
         }
         [HttpPost]
         public async Task<ActionResult<FavoritList>> AddFavourite(int productId, string userId)
@@ -27,21 +29,35 @@ namespace Roya.Controllers
 
             try
             {
-                var AddFavourite = new FavoritList()
+
+                if (productExist(productId ,userId))
                 {
-                    UserId = userId,
-                    ProductId= productId,
+                    
+
+                    return BadRequest(new ApiErroeResponse(400, "Alredy add to favourite list "));
+                }
+                else
+                {
+                    var AddFavourite = new FavoritList()
+                    {
+                        UserId = userId,
+                        ProductId = productId,
 
 
-                };
-                await this.repositry.Add(AddFavourite);
-                repositry.SaveChange();
+                    };
+                    await this.repositry.Add(AddFavourite);
+                    repositry.SaveChange();
+
+                }
+
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
             return Ok("FavouriteList Added");
+
+
         }
         [HttpGet]
         public async Task<ActionResult<FavoritList>> GetAllFavourite()
@@ -74,5 +90,18 @@ namespace Roya.Controllers
             repositry.SaveChange();
             return Ok(" Delete Done");
         }
+
+        [HttpGet("productExist")]
+        public  bool productExist( int id,string userId)
+        {
+           
+
+            var x =  context.FavoritLists.Where(p => p.ProductId == id).ToList() ;
+            if (x.Count==0) return false;
+            var exist = x.Where(u =>u.UserId==userId).ToList() ;
+            if (exist.Count == 0) return  false;
+            return true;
+        }
+      
     }
 }

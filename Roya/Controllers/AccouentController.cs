@@ -34,7 +34,7 @@ namespace Roya.Controllers
             this.royaContext = royaContext;
         }
         [HttpPost("admin")]
-        public async Task<ActionResult> AdminRegister( RegisterDTO registerDTO)
+        public async Task<ActionResult> AdminRegister([FromForm] RegisterDTO registerDTO)
         {
             if (emailExist(registerDTO.Email).Result.Value)
             {

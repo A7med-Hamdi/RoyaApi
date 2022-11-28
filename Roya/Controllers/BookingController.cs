@@ -22,7 +22,7 @@ namespace Roya.Controllers
             this.user = user;
         }
         [HttpPost]
-        public async Task<ActionResult<Booking>> AddBooking(Booking booking)
+        public async Task<ActionResult<Booking>> AddBooking([FromForm]Booking booking)
 
         {
            
