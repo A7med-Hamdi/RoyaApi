@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Roya.DTO;
 using Roya.Errors;
 using Roya_BLL.interFaces;
 using Roya_DDL.Entities;
@@ -24,13 +25,13 @@ namespace Roya.Controllers
             this.context = context;
         }
         [HttpPost]
-        public async Task<ActionResult<FavoritList>> AddFavourite([FromBody]int productId,[FromBody] string userId)
+        public async Task<ActionResult<FavoritList>> AddFavourite(FavoriteDTO favoriteDTO)
         {
 
             try
             {
 
-                if (productExist(productId ,userId))
+                if (productExist( favoriteDTO.ProductId ,favoriteDTO.UserId))
                 {
                     
 
@@ -40,8 +41,8 @@ namespace Roya.Controllers
                 {
                     var AddFavourite = new FavoritList()
                     {
-                        UserId = userId,
-                        ProductId = productId,
+                        UserId = favoriteDTO.UserId,
+                        ProductId = favoriteDTO.ProductId,
 
 
                     };
