@@ -25,7 +25,7 @@ namespace Roya.Controllers
             this.context = context;
         }
         [HttpPost]
-        public async Task<ActionResult<FavoritList>> AddFavourite(FavoriteDTO favoriteDTO)
+        public async Task<ActionResult<FavoritList>> AddFavourite([FromBody] FavoriteDTO favoriteDTO)
         {
 
             try
