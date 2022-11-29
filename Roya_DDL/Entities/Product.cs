@@ -17,7 +17,7 @@ namespace Roya_DDL.Entities
         public decimal Price { get; set; }
         public string  address { get; set; }
 
-        public bool Aprove { get; set; } = false;
+        public bool Aprove { get; set; }
         public virtual List<Image>? Images { get; set; } = new List<Image>();
 
 

@@ -13,7 +13,8 @@
             using var fs = new FileStream(filePath, FileMode.Create);
 
             file.CopyTo(fs);
-            return $"http://royaiti-001-site1.gtempurl.com/Files/Images/{fileName}"; ;
+            return $"http://royaiti-001-site1.gtempurl.com/Files/Images/{fileName}";
+            //return $"https://localhost:7272/Files/Images/{fileName}"; 
         }
 
         public static void deleteFile(string folderName ,string fileNmae)

@@ -51,10 +51,13 @@ namespace Roya.Controllers
                     product.Images.Add(new Image());
                     product.Images[i].Name = DocumentSitting.addFile(product.ImagesFile[i], "images");
                 }
-                var Addproduct = mapper.Map<Product>(product);
+
+                var Addproduct = mapper.Map<ProductDTO , Product>(product);
+                Addproduct.Aprove = product.Approve;
                 await repositry.Add(Addproduct);
                 repositry.SaveChange();
                 return Ok(Addproduct);
+
 
             }
             catch (Exception ex)
@@ -135,7 +138,7 @@ namespace Roya.Controllers
                 updateproduct.Price = product.Price;
                 updateproduct.address = product.address;
                 updateproduct.UserId = updateproduct.UserId;
-
+              
 
 
                 repositry.Update(updateproduct);
@@ -224,7 +227,7 @@ namespace Roya.Controllers
             }
             repositry.Delete(data);
             repositry.SaveChange();
-            return Ok(" Delete Done");
+            return Ok(data);
         }
 
         [HttpPost("addComment")]

@@ -15,7 +15,7 @@ namespace Roya.helper
 
                      .ForMember(d => d.Comments, o => o.MapFrom(s => s.Comments.Select(c => new { c.text, c.DateTime,c.UserName , c.UserImage })));
 
-            CreateMap<ProductDTO, Product>();
+            CreateMap<ProductDTO, Product>().ReverseMap();
                   
         }
     }
