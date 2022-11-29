@@ -36,7 +36,7 @@ namespace Roya.Controllers
                     UserEmail = booking.UserEmail,
                     ProductName = booking.ProductName,
                     UserName   = booking.UserName,
-
+                    Image = booking.Image,
                     
                 };
                 await this.repositry.Add( AddBooking );
