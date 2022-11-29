@@ -24,7 +24,7 @@ namespace Roya.Controllers
             this.context = context;
         }
         [HttpPost]
-        public async Task<ActionResult<FavoritList>> AddFavourite(int productId, string userId)
+        public async Task<ActionResult<FavoritList>> AddFavourite([FromBody]int productId, string userId)
         {
 
             try
