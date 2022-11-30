@@ -210,7 +210,7 @@ namespace Roya.Controllers
               );
             }
 
-            if (role[0] == "UserBuyer")
+            if (role[0] == "Seller")
             {
                 return Ok
               (new CurrentUserDTO()
