@@ -11,7 +11,7 @@ namespace Roya_DDL.Entities
 {
     public class Comment : BaseEntity
     {
-        public DateTime DateTime { get; set; }
+        public DateTime DateTime { get; set; }= DateTime.Now;
         public string text { get; set; }
  
         public string UserName { get; set; }
