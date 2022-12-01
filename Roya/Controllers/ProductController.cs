@@ -92,6 +92,7 @@ namespace Roya.Controllers
             var product = await repositry.GetDataByIdWithSpecAsync(spec);
 
             var data = mapper.Map<Product, productViewDTO>(product);
+         
 
             return Ok(data);
         }

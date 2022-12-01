@@ -1,4 +1,6 @@
-﻿namespace Roya.DTO
+﻿using Roya_DDL.Entities;
+
+namespace Roya.DTO
 {
     public class productViewDTO
     {
@@ -11,7 +13,7 @@
         public  List<string> Images { get; set; }=new List<string>();
 
         public bool Aprove { get; set; } = false;
-        public List<string> Comments { get; set; } =new List<string>();
+        public List<CommentDto> Comments { get; set; } =new List<CommentDto>();
 
     }
 }

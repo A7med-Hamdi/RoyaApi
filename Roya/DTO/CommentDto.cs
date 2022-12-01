@@ -2,6 +2,14 @@
 {
     public class CommentDto
     {
-        public string text { get; set; } 
+           
+        public DateTime DateTime { get; set; }
+        public string text { get; set; }
+
+        public string UserName { get; set; }
+        public string UserImage { get; set; }
+
+        public int ProductId { get; set; }
+
     }
 }
