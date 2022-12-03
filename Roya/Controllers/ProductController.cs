@@ -138,6 +138,7 @@ namespace Roya.Controllers
                 updateproduct.Type = product.Type;
                 updateproduct.Price = product.Price;
                 updateproduct.address = product.address;
+                updateproduct.Aprove = false;
                 updateproduct.UserId = updateproduct.UserId;
               
 
