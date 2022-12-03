@@ -35,7 +35,7 @@ namespace Roya.Controllers
                 {
 
 
-                    return BadRequest(new ApiErroeResponse(400, "Alredy add to favourite list "));
+                    return BadRequest(new ApiErroeResponse(400, "Alredy add to Booking list "));
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace Roya.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return Ok("Booking Done");
+            return Ok(booking);
         } 
         [HttpGet]
         public async Task<ActionResult<Booking>> GetAllBooking()
@@ -98,7 +98,7 @@ namespace Roya.Controllers
           
             repositry.Delete(data);
             repositry.SaveChange();
-            return Ok(" Delete Done");
+            return Ok(id);
         }
         [HttpGet("productExist")]
         public bool productExist(int id, string userId)

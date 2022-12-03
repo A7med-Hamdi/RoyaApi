@@ -75,8 +75,9 @@ namespace Roya.Controllers
             var totalItems = await repositry.GetCountASync(countSpec);
 
             var products = await repositry.GetAllDataWithSpecAsync(spec);
+            var producttrue=products.Where(p => p.Aprove == true).ToList();
 
-            var data = mapper.Map<IReadOnlyList<Product>, IReadOnlyList<productViewDTO>>(products);
+            var data = mapper.Map<IReadOnlyList<Product>, IReadOnlyList<productViewDTO>>(producttrue);
 
             var pagnation = new Paganation<productViewDTO>(productParams.PageIndex, productParams.PageSize, totalItems, data);
 

@@ -56,7 +56,7 @@ namespace Roya.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return Ok("FavouriteList Added");
+            return Ok(favoriteDTO);
 
 
         }
