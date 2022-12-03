@@ -89,7 +89,7 @@ namespace Roya.Controllers
 
             repositry.Delete(data);
             repositry.SaveChange();
-            return Ok(" Delete Done");
+            return Ok(data);
         }
 
         [HttpGet("productExist")]

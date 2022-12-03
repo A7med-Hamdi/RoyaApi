@@ -15,36 +15,48 @@ namespace Roya.Controllers
     {
         private readonly IGenercRepositry<Booking> repositry;
         private readonly UserManager<User> user;
+        private readonly RoyaContext context;
 
-        public BookingController(IGenercRepositry<Booking> repositry , UserManager<User> user )
+        public BookingController(IGenercRepositry<Booking> repositry , UserManager<User> user, RoyaContext context)
         {
             this.repositry = repositry;
             this.user = user;
+            this.context = context;
         }
         [HttpPost]
         public async Task<ActionResult<Booking>> AddBooking([FromForm]Booking booking)
 
         {
-           
+
+
             try
             {
-                var AddBooking = new Booking()
+                if (productExist(booking.ProductId, booking.UserId))
                 {
-                    UserId = booking.UserId,
-                    ProductId = booking.ProductId,
-                    Stutes = false,
-                    UserEmail = booking.UserEmail,
-                    ProductName = booking.ProductName,
-                    UserName   = booking.UserName,
-                    Image = booking.Image,
-                    
-                };
-                await this.repositry.Add( AddBooking );
-                 repositry.SaveChange();
+
+
+                    return BadRequest(new ApiErroeResponse(400, "Alredy add to favourite list "));
+                }
+                else
+                {
+                    var AddBooking = new Booking()
+                    {
+                        UserId = booking.UserId,
+                        ProductId = booking.ProductId,
+                        Stutes = false,
+                        UserEmail = booking.UserEmail,
+                        ProductName = booking.ProductName,
+                        UserName = booking.UserName,
+                        Image = booking.Image,
+
+                    };
+                    await this.repositry.Add(AddBooking);
+                    repositry.SaveChange();
+                }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);  
+                return BadRequest(ex.Message);
             }
             return Ok("Booking Done");
         } 
@@ -87,6 +99,17 @@ namespace Roya.Controllers
             repositry.Delete(data);
             repositry.SaveChange();
             return Ok(" Delete Done");
+        }
+        [HttpGet("productExist")]
+        public bool productExist(int id, string userId)
+        {
+
+
+            var x = context.Bookings.Where(p => p.ProductId == id).ToList();
+            if (x.Count == 0) return false;
+            var exist = x.Where(u => u.UserId == userId).ToList();
+            if (exist.Count == 0) return false;
+            return true;
         }
     }
 }
